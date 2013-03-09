@@ -1,0 +1,71 @@
+#!/bin/bash
+# bash template
+
+# Print usage information and exit
+print_usage(){
+    echo -e "\n" \
+    "usage: ./bashtemplate -o option \n" \
+    "\n" \
+    "-o <option>    an option\n" \
+    "-h             this help\n" \
+    "\n" && exit 1
+}
+
+###
+# Options
+###
+
+# Loop through $@ to find flags
+while getopts ":ho:" FLAG; do
+    case "${FLAG}" in
+        o) # Our option
+            OPTION="${OPTARG}" ;;
+        h) # Print usage information
+            HELP=1;;
+        [:?]) # Print usage information 
+            print_usage;;
+    esac
+done
+
+###
+# Functions
+###
+
+log_date(){
+    echo $(date +"%b %e %T")
+}
+
+error() {
+    NOW=$(log_date)
+    echo "${NOW}: ERROR: $1"
+    exit 1
+}
+
+warning() {
+    NOW=$(log_date)
+    echo "${NOW}: WARNING: $1"
+}
+
+info() {
+    NOW=$(log_date)
+    echo "${NOW}: INFO: $1"
+}
+
+# Do something
+do_something(){
+    info "Doing something..."
+    warning "Encountered an anomaly while doing something."
+}
+
+###
+# Program execution
+###
+[ "${HELP}" ] && print_usage
+
+if [ ${OPTION} ]
+then
+    info "Executing do_something()"
+    do_something
+else
+    print_usage
+fi
