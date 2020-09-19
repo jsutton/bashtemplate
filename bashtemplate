@@ -2,7 +2,7 @@
 # bash template
 
 # Print usage information and exit
-print_usage(){
+function print_usage(){
     echo -e "\n" \
     "usage: ./bashtemplate -o option \n" \
     "\n" \
@@ -31,28 +31,28 @@ done
 # Functions
 ###
 
-log_date(){
+function log_date(){
     echo $(date +"%b %e %T")
 }
 
-error() {
+function log_error() {
     NOW=$(log_date)
     echo "${NOW}: ERROR: $1"
     exit 1
 }
 
-warning() {
+function log_warning() {
     NOW=$(log_date)
     echo "${NOW}: WARNING: $1"
 }
 
-info() {
+function log_info() {
     NOW=$(log_date)
     echo "${NOW}: INFO: $1"
 }
 
 # Do something
-do_something(){
+function do_something(){
     info "Doing something..."
     warning "Encountered an anomaly while doing something."
 }
